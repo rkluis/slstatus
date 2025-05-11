@@ -57,44 +57,44 @@
 		return fmt_human(total * 1024, 1024);
 	}
 
-const char *
-ram_used(const char *unused)
-{
-	uintmax_t total = 0, free = 0, buffers = 0, cached = 0, shmem = 0, sreclaimable = 0, used = 0;
-	char key[32];
-	uintmax_t value;
-	char unit[8];
+	const char *
+	ram_used(const char *unused)
+	{
+		uintmax_t total = 0, free = 0, buffers = 0, cached = 0, shmem = 0, sreclaimable = 0, used = 0;
+		char key[32];
+		uintmax_t value;
+		char unit[8];
 
-	FILE *fp = fopen("/proc/meminfo", "r");
-	if (!fp)
-		return NULL;
+		FILE *fp = fopen("/proc/meminfo", "r");
+		if (!fp)
+			return NULL;
 
-	char line[256];
-	while (fgets(line, sizeof(line), fp)) {
-		if (sscanf(line, "%31[^:]: %" SCNuMAX " %7s", key, &value, unit) != 3)
-			continue;
+		char line[256];
+		while (fgets(line, sizeof(line), fp)) {
+			if (sscanf(line, "%31[^:]: %" SCNuMAX " %7s", key, &value, unit) != 3)
+				continue;
 
-		if (!strcmp(key, "MemTotal"))
-			total = value;
-		else if (!strcmp(key, "MemFree"))
-			free = value;
-		else if (!strcmp(key, "Buffers"))
-			buffers = value;
-		else if (!strcmp(key, "Cached"))
-			cached = value;
-		else if (!strcmp(key, "Shmem"))
-			shmem = value;
-		else if (!strcmp(key, "SReclaimable"))
-			sreclaimable = value;
-	}
-	fclose(fp);
+			if (!strcmp(key, "MemTotal"))
+				total = value;
+			else if (!strcmp(key, "MemFree"))
+				free = value;
+			else if (!strcmp(key, "Buffers"))
+				buffers = value;
+			else if (!strcmp(key, "Cached"))
+				cached = value;
+			else if (!strcmp(key, "Shmem"))
+				shmem = value;
+			else if (!strcmp(key, "SReclaimable"))
+				sreclaimable = value;
+		}
+		fclose(fp);
 
-	if (!total || !free)
-		return NULL;
+		if (!total || !free)
+			return NULL;
 
-	used = total - free - buffers - cached - sreclaimable + shmem;
-	return fmt_human(used * 1024, 1024);
-}
+		used = total - free - buffers - cached - sreclaimable + shmem;
+		return fmt_human(used * 1024, 1024);
+	}	
 
 
 #elif defined(__OpenBSD__)
