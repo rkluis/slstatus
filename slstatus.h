@@ -4,6 +4,8 @@
 const char *battery_perc(const char *);
 const char *battery_remaining(const char *);
 const char *battery_state(const char *);
+const char *battery_health(const char *);
+const char *battery_wattage(const char *);
 
 /* cat */
 const char *cat(const char *path);
