@@ -88,8 +88,10 @@ main(int argc, char *argv[])
 
 		status[0] = '\0';
 		for (i = len = 0; i < LEN(args); i++) {
+			/* auto-hide segments whose component has no value
+			 * (e.g. battery on a desktop, missing wlan0) */
 			if (!(res = args[i].func(args[i].args)))
-				res = unknown_str;
+				continue;
 
 			if ((ret = esnprintf(status + len, sizeof(status) - len,
 			                     args[i].fmt, res)) < 0)

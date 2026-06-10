@@ -66,6 +66,7 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function          format                            argument */
+	{ run_command,      "󰍹 %s | ",                      "/home/rolly/scripts/hdr-status.sh" },
 	{ cpu_perc,         " %s%% | ",                       NULL },
 	{ ram_used,         "󰍛 %sB | ",                       NULL },
 	{ temp,             " %s°C | ",                       "/sys/class/thermal/thermal_zone0/temp" },
