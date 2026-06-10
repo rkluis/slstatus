@@ -76,7 +76,9 @@ static const struct arg args[] = {
 	{ battery_remaining,  "⏳ %s | ",                     "BAT0" },
 	{ battery_wattage,    "󱐋 %s | ",                     "BAT0" },
 	{ disk_perc,        " %s%% | ",                       "/" },
-	{ ipv4,             " %s | ",                         "wlan0" },
+	/* IP of the default-route interface: prefers wired over wifi via
+	 * route metric; hides when offline */
+	{ run_command,      " %s | ",                         "ip -4 route get 1.1.1.1 2>/dev/null | sed -n 's/.*src \\([^ ]*\\).*/\\1/p'" },
 	{ datetime,         " %s",                            "%F %T" },
 };
 
