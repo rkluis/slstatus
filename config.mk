@@ -11,7 +11,10 @@ X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
 
 # flags
-CPPFLAGS = -I$(X11INC) -D_DEFAULT_SOURCE -DVERSION=\"${VERSION}\"
+# battery segments only where there is a battery (laptop yes, desktop no)
+BATTERY = $(shell test -d /sys/class/power_supply/BAT0 && echo -DHAS_BATTERY)
+
+CPPFLAGS = -I$(X11INC) -D_DEFAULT_SOURCE -DVERSION=\"${VERSION}\" $(BATTERY)
 CFLAGS   = -std=c99 -pedantic -Wall -Wextra -Wno-unused-parameter -Os
 LDFLAGS  = -L$(X11LIB) -s
 # OpenBSD: add -lsndio

@@ -70,11 +70,13 @@ static const struct arg args[] = {
 	{ cpu_perc,         " %s%% | ",                       NULL },
 	{ ram_used,         "󰍛 %sB | ",                       NULL },
 	{ temp,             " %s°C | ",                       "/sys/class/thermal/thermal_zone0/temp" },
+#ifdef HAS_BATTERY	/* config.mk: set when /sys/class/power_supply/BAT0 exists (laptop) */
 	{ battery_state,    " %s ",                           "BAT0" },
 	{ battery_perc,     "%s%% | ",                         "BAT0" },
 	{ battery_health,     "󰁺 %s | ",                     "BAT0" },
 	{ battery_remaining,  "⏳ %s | ",                     "BAT0" },
 	{ battery_wattage,    "󱐋 %s | ",                     "BAT0" },
+#endif
 	{ disk_perc,        " %s%% | ",                       "/" },
 	/* IP of the default-route interface: prefers wired over wifi via
 	 * route metric; hides when offline */
