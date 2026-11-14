@@ -66,16 +66,21 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function          format                            argument */
+	{ run_command,      "󰍹 %s | ",                      "/home/rolly/scripts/hdr-status.sh" },
 	{ cpu_perc,         " %s%% | ",                       NULL },
 	{ ram_used,         "󰍛 %sB | ",                       NULL },
 	{ temp,             " %s°C | ",                       "/sys/class/thermal/thermal_zone0/temp" },
+#ifdef HAS_BATTERY	/* config.mk: set when /sys/class/power_supply/BAT0 exists (laptop) */
 	{ battery_state,    " %s ",                           "BAT0" },
 	{ battery_perc,     "%s%% | ",                         "BAT0" },
 	{ battery_health,     "󰁺 %s | ",                     "BAT0" },
 	{ battery_remaining,  "⏳ %s | ",                     "BAT0" },
 	{ battery_wattage,    "󱐋 %s | ",                     "BAT0" },
+#endif
 	{ disk_perc,        " %s%% | ",                       "/" },
-	{ ipv4,             " %s | ",                         "wlan0" },
+	/* IP of the default-route interface: prefers wired over wifi via
+	 * route metric; hides when offline */
+	{ run_command,      " %s | ",                         "ip -4 route get 1.1.1.1 2>/dev/null | sed -n 's/.*src \\([^ ]*\\).*/\\1/p'" },
 	{ datetime,         " %s",                            "%F %T" },
 };
 
